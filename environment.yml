@@ -1,0 +1,17 @@
+version: '2.3'
+
+services:
+  tracker:
+    build: .
+    command: tail -f /dev/null
+    restart: always
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ./people_tracker:/home/env/people_tracker
+      - ./input:/home/env/input
+      - ./output:/home/env/output
+      - ./models:/home/env/models
+    environment:
+      - DISPLAY=${DISPLAY}
+    devices:
+      - /dev/dri:/dev/dri
