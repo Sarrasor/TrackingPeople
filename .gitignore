@@ -61,7 +61,8 @@ __pycache__/
 *.weights
 
 # Weights
-yolo*
+**yolo/data/darknet_weights/*
+!yolo/data/darknet_weights/readme.txt
 
 # Models
 models/*
