@@ -1,8 +1,8 @@
 # Tracking people
 
-![Results of tracking]('images/result.png')
+![Results of tracking](images/result.png)
 
-![Results of tracking]('images/result2.png')
+![Results of tracking](images/result2.png)
 
 Here is the link to folder with some results:
 [Click](https://drive.google.com/open?id=1bFf2Bz0xscJkE7tbkzITag0BEhVA9H0z)
