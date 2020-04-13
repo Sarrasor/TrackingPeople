@@ -1,3 +1,4 @@
+
 # Tracking people
 
 ![Results of tracking](images/result.png)
@@ -6,7 +7,7 @@
 
 
 ## Video
-Here is the link to folder with some results:
+Here is the link to the folder with some results:
 [Click](https://drive.google.com/open?id=1bFf2Bz0xscJkE7tbkzITag0BEhVA9H0z)
 
 ## Repository contents description
@@ -33,58 +34,58 @@ The task is to find all people in each frame, draw bounding box, and assign an I
 
 We should save the output in `output.mp4` 
 
-We make an assumption that there will be no instantaneous camera movements and that objects cannot dissapear and appear instantaneously.
+We make an assumption that there will be no instantaneous camera movements and that objects cannot disappear and appear instantaneously.
 
 ## Solution approach
-The aproach is the following:
+The approach is the following:
 
-1) Generate list of bounding box detections with some Neural Network
-2) Solve data association problem
+1) Generate a list of bounding box detections with some Neural Network
+2) Solve the data association problem
 2) Track boxes using Kalman filter. Detections are used as measurements for Kalman filter
 
 ## Detection
 Let's use a Neural Network that can detect objects to generate bounding boxes around people.
 
-The selection of a Neural Network for detection highly influences the results of tracking. For example, if we use `ssd_mobilenet_v2_coco`, the system will work in real time, but the results are bad due to frequent bounding box jitter.
+The selection of a Neural Network for detection profoundly influences the results of tracking. For example, if we use `ssd_mobilenet_v2_coco`, the system will work in real-time, but the results are inadequate due to periodic bounding box jitter.
 
-Also, the dataset matters a lot. For example, `faster_rcnn_nas` that was trained on COCO dataset has worse detection accuracy than the faster `faster_rcnn_resnet101_kitti` model that was trained on KITTI dataset.
+Also, the dataset matters a lot. For example, `faster_rcnn_nas` that was trained on the COCO dataset has worse detection accuracy than the faster `faster_rcnn_resnet101_kitti` model that was trained on KITTI dataset.
 
-Out of all tested models, YOLOv3 has shown the best result in terms of speed/accuracy. On the system with GPU tracking with YOLOv3 should work in real time.
+Out of all tested models, YOLOv3 has shown the best result in terms of speed/accuracy. On the system with GPU tracking with YOLOv3 should work in real-time.
 
 ## Data association
-The data association problem is approached as an optimization problem. The task is to minimize weighted sum of bounding boxes. Cost matrix for the centroid tracking approach was constructed using eucledian distance between centroids. IOU metric was used for the bounding box approach.
+The data association problem is approached as an optimization problem. The task is to minimize the weighted sum of bounding boxes. The cost matrix for the centroid tracking approach was constructed using the euclidean distance between centroids. IOU metric was used for the bounding box approach.
 
-The optimization problem is solved with Hungarian algorithm (also known as Munkres algorithm).
+The optimization problem is solved with the Hungarian algorithm (also known as the Munkres algorithm).
 
 ## Tracking
-Given the associated data as measurements we can track bounding boxes. Two approaches are tested: 
+Given the associated data as measurements, we can track bounding boxes. Two approaches are tested: 
 
 ### Centroid tracking
-The state is represented as coordinates of the bounding box centroid. The centroid of the associated measurement is calculated and passed as a measurement to Kalman filter
+The state is represented as coordinates of the bounding box centroid. The centroid of the associated measurement is calculated and passed as a measurement to a Kalman filter.
 
-This approach seems to be more robust to bad detections
+This approach seems to be more robust to wrong detections.
 
 ### Bounding box
-The state is represented as coordinates of corners of the bounding box. The associated measurement is passed as a measurement to Kalman filter
+The state is represented as coordinates of corners of the bounding box. The associated measurement is passed as a measurement to a Kalman filter.
 
-This approach seems to be more robust to occlusions
+This approach seems to be more robust to occlusions.
 
-## How to improve the soution
-- Do proper metapatameter tuning (Kalman, Neural Network, thresholds)
+## How to improve the solution
+- Do proper meta parameter tuning (Kalman, Neural Network, thresholds)
 - Retrain models on humans using transfer learning
-- Select better model for Kalman filter
+- Select a better model for Kalman filter
 - Combine Kalman filter with more advanced trackers like GOTURN
-- Solve data association problem using additional methods: 
+- Solve the data association problem using additional methods: 
 	- Bipartite Graphs approaches
 	- Dynamic models integration
 	- etc
 - Do thorough research on new detection and tracking methods
 
 ## Relation to code
-You can run centroid tracking approach using:
+You can run the centroid tracking approach using:
 `python3 main_center.py ../input/video.mp4`
 
-You can run bounding box tracking approach using:
+You can run the bounding box tracking approach using:
 `python3 main.py ../input/video.mp4`
 
 ## Hardware
@@ -141,6 +142,6 @@ python3 main_center.py ../input/video.mp4
 ```
 
 ## Many thanks to:
-[TF model zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md)
-[Yolo](https://github.com/wizyoung/YOLOv3_TensorFlow)
-[Sort](https://github.com/abewley/sort)
+- [TF model zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md)
+- [Yolo](https://github.com/wizyoung/YOLOv3_TensorFlow)
+- [Sort](https://github.com/abewley/sort)
