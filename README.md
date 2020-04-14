@@ -145,3 +145,7 @@ python3 main_center.py ../input/video.mp4
 - [TF model zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/detection_model_zoo.md)
 - [Yolo](https://github.com/wizyoung/YOLOv3_TensorFlow)
 - [Sort](https://github.com/abewley/sort)
+- [PETS dataset](http://www.cvg.reading.ac.uk/PETS2009/a.html#s2)
+- [Oxford town centre dataset](https://www.robots.ox.ac.uk/ActiveVision/Research/Projects/2009bbenfold_headpose/project.html)
+- [Chair workout video](https://www.youtube.com/watch?v=V4XW74W9t4o)
+- [Street video](https://www.youtube.com/watch?v=swaW8J2Nx1E)
